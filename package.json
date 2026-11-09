@@ -1,0 +1,12 @@
+{
+  "name": "sunset-forecast",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Is tonight's sunset worth shooting? Physics-based score for SF and Marin from Open-Meteo.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "serve": "python3 -m http.server 8797"
+  },
+  "license": "MIT"
+}

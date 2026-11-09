@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+docs/cc-output/
+tmp/
+logs/
+*.log
+*.tmp
+*.bak

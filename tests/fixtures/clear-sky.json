@@ -1,0 +1,55 @@
+{
+  "at_location": {
+    "low": 0.0,
+    "mid": 0.0,
+    "high": 0.0,
+    "visibility_m": 45000.0,
+    "relative_humidity": 45.0,
+    "precipitation": 0.0,
+    "aod": 0.08
+  },
+  "samples": [
+    {
+      "distance_km": 25,
+      "low": 0,
+      "mid": 0,
+      "high": 0
+    },
+    {
+      "distance_km": 50,
+      "low": 0,
+      "mid": 0,
+      "high": 0
+    },
+    {
+      "distance_km": 100,
+      "low": 0,
+      "mid": 0,
+      "high": 0
+    },
+    {
+      "distance_km": 150,
+      "low": 0,
+      "mid": 0,
+      "high": 0
+    },
+    {
+      "distance_km": 200,
+      "low": 0,
+      "mid": 0,
+      "high": 0
+    },
+    {
+      "distance_km": 300,
+      "low": 0,
+      "mid": 0,
+      "high": 0
+    },
+    {
+      "distance_km": 400,
+      "low": 0,
+      "mid": 0,
+      "high": 0
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#14161c">
+<title>Sunset Forecast</title>
+<meta name="description" content="Is tonight's sunset worth shooting? A physics-based score for San Francisco and Marin, from Open-Meteo cloud data.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-row">
+    <h1>Sunset Forecast</h1>
+    <button id="refresh" type="button" aria-label="Refresh">↻</button>
+  </div>
+  <p class="meta"><span id="today">Loading…</span> · <span id="updated"></span></p>
+</header>
+
+<main id="app" aria-live="polite">
+  <div class="loading">Fetching cloud forecasts…</div>
+</main>
+
+<section id="how" class="how">
+  <h2>How the score works</h2>
+  <p>A great sunset needs two things: a canvas of mid or high cloud overhead, and an open path for the sun's last light to reach it from underneath. That light travels nearly horizontally and passes over the ground 50 to 400 km out along the sunset bearing. If that strip is clouded over, or a marine layer blocks the local horizon, the overhead cloud never lights up.</p>
+  <p>Each location gets four components, each 0 to 1, multiplied together:</p>
+  <ul>
+    <li><strong>Canvas.</strong> Cloud overhead at the location. Clear sky scores low, 30 to 70% cover is ideal, a full deck is riskier. Low cloud overhead hides the canvas.</li>
+    <li><strong>Light path.</strong> Cloud at seven sample points along the sunset bearing, 25 to 400 km out. Low cloud near the location and high cloud far out block the light. This is the component that separates glorious from grey.</li>
+    <li><strong>Horizon.</strong> Marine layer and fog at the location and 25 km out, scaled by how much each spot can see over a shallow layer. Rain at sunset nearly zeroes it.</li>
+    <li><strong>Clarity.</strong> Visibility, humidity, and aerosols. Clean dry air after a front boosts the score a little; smoke and haze pull it down and are flagged.</li>
+  </ul>
+  <p>The score is evaluated at sunset and 20 minutes after, and the higher one is shown. For today, two models are scored (HRRR and GFS); if they disagree by more than 25 points the card says so. Days 2 and 3 use the global model only.</p>
+  <p>The strip under each score shows cover by layer at each sample distance. Shaded cells are cloud; outlined cells are the ones blocking the light.</p>
+</section>
+
+<footer class="foot">
+  <p>Weather data by <a href="https://open-meteo.com/" rel="noopener">Open-Meteo.com</a> (CC BY 4.0). Sun times via SunCalc. No tracking, no cookies. <a href="#how">How the score works</a>.</p>
+</footer>
+
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
