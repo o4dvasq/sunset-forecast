@@ -122,3 +122,21 @@ test('edition follows the local clock', () => {
   assert.equal(editionFor(new Date('2026-11-13T23:30:00Z'), TZ, BRIEF.morning_edition_before_hour), 'evening'); // 3:30 pm PST
   assert.equal(editionFor(new Date('2026-07-01T12:00:00Z'), TZ, BRIEF.morning_edition_before_hour), 'morning'); // 5:00 am PDT
 });
+
+import { shouldSend } from '../src/brief.js';
+
+test('sending waits for the window and happens once per edition', () => {
+  const base = { edition: 'morning', date: '2026-11-13', timeZone: TZ, cfg: BRIEF, lastSentKey: null };
+  // Standard time: the 11:45 UTC run is 3:45 am, an hour early; 12:45 UTC is 4:45 am.
+  assert.equal(shouldSend({ ...base, now: new Date('2026-11-13T11:45:00Z') }).reason, 'too early');
+  const due = shouldSend({ ...base, now: new Date('2026-11-13T12:45:00Z') });
+  assert.equal(due.send, true);
+  assert.equal(shouldSend({ ...base, now: new Date('2026-11-13T12:50:00Z'), lastSentKey: due.key }).reason, 'already sent');
+  // Daylight time: 11:45 UTC is 4:45 am and sends; yesterday's key does not block it.
+  assert.equal(shouldSend({ ...base, date: '2026-07-01', now: new Date('2026-07-01T11:45:00Z'), lastSentKey: '2026-06-30:morning' }).send, true);
+  // Evening: 22:15 UTC is 2:15 pm standard (early), 23:15 UTC is 3:15 pm.
+  const evening = { ...base, edition: 'evening' };
+  assert.equal(shouldSend({ ...evening, now: new Date('2026-11-13T22:15:00Z') }).send, false);
+  assert.equal(shouldSend({ ...evening, now: new Date('2026-11-13T23:15:00Z') }).send, true);
+  assert.equal(shouldSend({ ...evening, now: new Date('2026-11-14T02:00:00Z') }).reason, 'too late');
+});

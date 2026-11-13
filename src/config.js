@@ -172,6 +172,11 @@ export const BRIEF = {
   suggestions: 3,
   conditions: 4,
   morning_edition_before_hour: 11, // local hour; later runs write the evening edition
+  // When each edition is sent, local time. A run sends only inside the window
+  // around that time, and only once per edition per day.
+  send_at: { morning: '05:00', evening: '15:30' },
+  send_lead_min: 30,
+  send_tail_min: 120,
 };
 
 export const FORECAST = {

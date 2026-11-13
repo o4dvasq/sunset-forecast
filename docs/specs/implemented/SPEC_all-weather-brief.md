@@ -53,9 +53,11 @@ to shoot and where, and send that as a text before each session.
    5:00 am and before 3:30 pm Pacific and publishes the text to the `brief`
    branch (one commit, force-pushed, so `main` history stays clean):
    - `morning.txt`, `evening.txt`, `latest.txt`, `latest.json`
-   An iPhone Shortcuts automation at 5:00 am and 3:30 pm fetches the file and
-   sends it as a message. The phone sends the text because a cloud SMS sender
-   needs carrier registration; the phone needs none.
+   The same run sends the brief as a Telegram message from a bot (amended
+   2026-11-12; the first cut relied on an iPhone Shortcuts automation fetching
+   the file). Telegram needs no carrier registration, which a cloud SMS sender
+   does. The run sends once per edition per day, inside a window around the
+   target time.
 7. **Page.** A strip of six session buttons (three days, morning and evening)
    replaces the per-card outlook rows. Selecting one shows that session's
    conditions, shot ideas and site cards.
@@ -92,4 +94,5 @@ All from Open-Meteo, no key:
 ## Out of scope
 
 - Ratings and the Lightroom backtest (v1 phases 1.5 and 2) remain unbuilt.
-- No cloud SMS provider.
+- No cloud SMS provider. Slack and Teams were passed over: both would put a
+  personal project into a work system.

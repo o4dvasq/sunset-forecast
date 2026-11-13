@@ -61,18 +61,22 @@ every idea names a known site and lens.
 
 ## The texted brief
 
-`.github/workflows/brief.yml` runs `scripts/brief.mjs` about 35 minutes before
-5:00 am and 3:30 pm Pacific and force-pushes the result as a single commit to
-the `brief` branch:
+`.github/workflows/brief.yml` runs `scripts/brief.mjs` 15 minutes before
+5:00 am and 3:30 pm Pacific. It sends the brief as a Telegram message from a
+bot (repository secrets `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`; without
+them nothing is sent) and force-pushes the result as a single commit to the
+`brief` branch:
 
 - `latest.txt`: the newest edition, the file the phone reads
 - `morning.txt`, `evening.txt`: the newest of each edition
 - `latest.json`: the same content as data
+- `sent.json`: the last edition sent, so the second scheduled run stays quiet
 
-An iPhone Shortcuts automation at 5:00 am and 3:30 pm fetches
+The schedule fires at both the daylight-time and standard-time hour; the
+script sends only within 30 minutes before to two hours after the target time,
+once per edition per day. `latest.txt` is also readable at
 `https://raw.githubusercontent.com/o4dvasq/sunset-forecast/brief/latest.txt`
-and sends the contents as a message. The phone sends the text because a cloud
-SMS sender needs carrier registration.
+for anything else that wants it (an iPhone Shortcuts automation, for example).
 
 ```
 cd ~/code/sunset-forecast

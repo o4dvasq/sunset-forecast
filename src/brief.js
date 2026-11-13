@@ -67,6 +67,26 @@ export function editionFor(now, timeZone, cutoffHour) {
   return hour < cutoffHour ? 'morning' : 'evening';
 }
 
+function localMinutes(now, timeZone) {
+  const parts = new Intl.DateTimeFormat('en-US', { timeZone, hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(now);
+  const value = (type) => Number(parts.find((p) => p.type === type).value);
+  return value('hour') * 60 + value('minute');
+}
+
+// Should this run send the edition? The schedule fires at both the
+// daylight-time and standard-time hour, so one of the two runs is an hour
+// early; it must stay quiet, and the later one must not send twice.
+export function shouldSend({ now, edition, date, timeZone, cfg, lastSentKey }) {
+  const key = `${date}:${edition}`;
+  if (lastSentKey === key) return { send: false, key, reason: 'already sent' };
+  const [hour, minute] = cfg.send_at[edition].split(':').map(Number);
+  const target = hour * 60 + minute;
+  const current = localMinutes(now, timeZone);
+  if (current < target - cfg.send_lead_min) return { send: false, key, reason: 'too early' };
+  if (current > target + cfg.send_tail_min) return { send: false, key, reason: 'too late' };
+  return { send: true, key, reason: 'in window' };
+}
+
 export function composeBrief(model, { edition, timeZone, cfg, now = null }) {
   const session = model.sessions.find((s) => s.date === model.dates[0] && s.session === edition);
   if (!session) throw new Error(`No ${edition} session for ${model.dates[0]}`);
