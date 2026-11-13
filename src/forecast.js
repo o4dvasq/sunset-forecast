@@ -1,16 +1,41 @@
 // Open-Meteo fetch, multi-coordinate requests, interpolation, and a small
 // localStorage cache. Network and storage are injectable so tests run in Node.
 
-export function buildForecastUrl(points, model, cfg) {
+export function buildForecastUrl(points, model, cfg, hourly = cfg.hourly) {
   const p = new URLSearchParams({
     latitude: points.map((pt) => pt.lat.toFixed(4)).join(','),
     longitude: points.map((pt) => pt.lon.toFixed(4)).join(','),
-    hourly: cfg.hourly.join(','),
+    hourly: hourly.join(','),
     models: model,
     forecast_days: String(cfg.forecast_days),
+    past_days: String(cfg.past_days ?? 0),
+    wind_speed_unit: 'mph',
     timezone: 'UTC',
   });
   return `${cfg.base_url}?${p.toString()}`;
+}
+
+// Local weather for the site points: the cloud and clarity variables plus
+// wind, temperature, storm indicators and the humidity profile.
+export function localVariables(cfg) {
+  const levels = cfg.pressure_levels_hpa.flatMap((hpa) => [`relative_humidity_${hpa}hPa`, `geopotential_height_${hpa}hPa`]);
+  return [...cfg.hourly, ...cfg.local_hourly, ...levels];
+}
+
+export function buildLocalUrl(points, model, cfg) {
+  return buildForecastUrl(points, model, cfg, localVariables(cfg));
+}
+
+export function buildMarineUrl(cfg) {
+  const p = new URLSearchParams({
+    latitude: cfg.marine_point.lat.toFixed(4),
+    longitude: cfg.marine_point.lon.toFixed(4),
+    hourly: cfg.marine_hourly.join(','),
+    forecast_days: String(cfg.forecast_days),
+    past_days: String(cfg.past_days ?? 0),
+    timezone: 'UTC',
+  });
+  return `${cfg.marine_url}?${p.toString()}`;
 }
 
 export function buildAirQualityUrl(points, cfg) {
@@ -19,6 +44,7 @@ export function buildAirQualityUrl(points, cfg) {
     longitude: points.map((pt) => pt.lon.toFixed(4)).join(','),
     hourly: cfg.air_quality_hourly.join(','),
     forecast_days: String(cfg.forecast_days),
+    past_days: String(cfg.past_days ?? 0),
     timezone: 'UTC',
   });
   return `${cfg.air_quality_url}?${p.toString()}`;
@@ -74,6 +100,50 @@ export function inputsAt(locationSeries, sampleSeries, sampleDistances, when, ai
       mid: at(s, 'cloud_cover_mid'),
       high: at(s, 'cloud_cover_high'),
     })),
+  };
+}
+
+// Local weather at one site at one instant. Wind in mph, temperatures in
+// Celsius, heights in metres. `profile` is the humidity profile, lowest first.
+export function localAt(series, when, cfg, airSeries = null) {
+  const at = (v) => interpolate(series, v, when);
+  const profile = cfg.pressure_levels_hpa
+    .map((hpa) => ({ height_m: at(`geopotential_height_${hpa}hPa`), rh: at(`relative_humidity_${hpa}hPa`) }))
+    .filter((level) => level.height_m != null && level.rh != null)
+    .sort((a, b) => a.height_m - b.height_m);
+  // Weather codes are categories, so take the nearest hour instead of blending.
+  const nearestHour = Math.round((when instanceof Date ? when.getTime() : when) / 3600000) * 3600000;
+  return {
+    time: when instanceof Date ? when : new Date(when),
+    low: at('cloud_cover_low'),
+    mid: at('cloud_cover_mid'),
+    high: at('cloud_cover_high'),
+    visibility_m: at('visibility'),
+    relative_humidity: at('relative_humidity_2m'),
+    precipitation: at('precipitation'),
+    precipitation_probability: at('precipitation_probability'),
+    temperature_c: at('temperature_2m'),
+    dew_point_c: at('dew_point_2m'),
+    wind_mph: at('wind_speed_10m'),
+    gust_mph: at('wind_gusts_10m'),
+    wind_direction_deg: at('wind_direction_10m'),
+    weather_code: interpolate(series, 'weather_code', nearestHour),
+    cape: at('cape'),
+    freezing_level_m: at('freezing_level_height'),
+    aod: airSeries ? interpolate(airSeries, 'aerosol_optical_depth', when) : null,
+    profile,
+  };
+}
+
+export function marineAt(series, when) {
+  const at = (v) => interpolate(series, v, when);
+  return {
+    time: when instanceof Date ? when : new Date(when),
+    wave_m: at('wave_height'),
+    wave_period_s: at('wave_period'),
+    swell_m: at('swell_wave_height'),
+    swell_period_s: at('swell_wave_period'),
+    sea_level_m: at('sea_level_height_msl'),
   };
 }
 

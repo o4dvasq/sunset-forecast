@@ -1,0 +1,71 @@
+name: brief
+
+# Writes the texted brief before 5:00 am and before 3:30 pm Pacific and
+# publishes it to the `brief` branch, where the phone picks it up.
+# GitHub cron is UTC and can start late, so each edition runs about 35 minutes
+# early, at both the daylight-time and the standard-time hour. The extra run is
+# harmless: it rewrites the same edition with a newer forecast.
+on:
+  schedule:
+    - cron: '25 11,12 * * *' # 4:25 am PDT and 4:25 am PST
+    - cron: '55 21,22 * * *' # 2:55 pm PDT and 2:55 pm PST
+  workflow_dispatch:
+    inputs:
+      edition:
+        description: 'morning or evening (blank picks by the clock)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: brief
+  cancel-in-progress: false
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Start from the files already published
+        run: |
+          mkdir -p out
+          if git fetch --depth 1 origin brief 2>/dev/null; then
+            git archive FETCH_HEAD | tar -x -C out
+          fi
+
+      - name: Write the brief
+        env:
+          EDITION: ${{ inputs.edition }}
+        run: |
+          if [ -n "$EDITION" ]; then
+            node scripts/brief.mjs --out out --edition "$EDITION"
+          else
+            node scripts/brief.mjs --out out
+          fi
+
+      - name: Publish to the brief branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd out
+          git init -q -b brief
+          git config user.name "sunset-forecast brief"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Brief $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -q --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" brief
+
+      # GitHub disables scheduled workflows in a repository with no activity
+      # for 60 days; re-enabling on every run keeps the schedule alive.
+      - name: Keep the schedule enabled
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/brief.yml/enable"

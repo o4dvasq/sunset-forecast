@@ -5,39 +5,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark light">
 <meta name="theme-color" content="#14161c">
-<title>Sunset Forecast</title>
-<meta name="description" content="Is tonight's sunset worth shooting? A physics-based score for San Francisco and Marin, from Open-Meteo cloud data.">
+<title>Light Forecast</title>
+<meta name="description" content="What is the weather offering photographers this morning and this evening? Fog, colour, storms, surf and moon for San Francisco and Marin, from Open-Meteo.">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header class="top">
   <div class="top-row">
-    <h1>Sunset Forecast</h1>
+    <h1>Light Forecast</h1>
     <button id="refresh" type="button" aria-label="Refresh">↻</button>
   </div>
   <p class="meta"><span id="today">Loading…</span> · <span id="updated"></span></p>
 </header>
 
 <main id="app" aria-live="polite">
-  <div class="loading">Fetching cloud forecasts…</div>
+  <div class="loading">Fetching forecasts…</div>
 </main>
 
 <section id="how" class="how">
-  <h2>How the score works</h2>
-  <p>A great sunset needs two things: a canvas of mid or high cloud overhead, and an open path for the sun's last light to reach it from underneath. That light travels nearly horizontally and passes over the ground 50 to 400 km out along the sunset bearing. If that strip is clouded over, or a marine layer blocks the local horizon, the overhead cloud never lights up.</p>
-  <p>Each location gets four components, each 0 to 1, multiplied together:</p>
+  <h2>How it works</h2>
+  <p>Each day has two sessions: morning (first light to a couple of hours after sunrise) and evening (mid afternoon to the end of blue hour). The strip at the top shows three days of both. The number on each is the strength of the best thing on offer that session.</p>
+  <p><strong>Conditions</strong> lists what the weather is doing, read from local forecasts at each viewpoint across the session:</p>
   <ul>
-    <li><strong>Canvas.</strong> Cloud overhead at the location. Clear sky scores low, 30 to 70% cover is ideal, a full deck is riskier. Low cloud overhead hides the canvas.</li>
-    <li><strong>Light path.</strong> Cloud at seven sample points along the sunset bearing, 25 to 400 km out. Low cloud near the location and high cloud far out block the light. This is the component that separates glorious from grey.</li>
-    <li><strong>Horizon.</strong> Marine layer and fog at the location and 25 km out, scaled by how much each spot can see over a shallow layer. Rain at sunset nearly zeroes it.</li>
-    <li><strong>Clarity.</strong> Visibility, humidity, and aerosols. Clean dry air after a front boosts the score a little; smoke and haze pull it down and are flagged.</li>
+    <li><strong>Fog.</strong> The marine layer's top is estimated from humidity at six heights. A top between the bridge roadway and the tower tops means towers above the fog; higher viewpoints are marked as above, in or under the deck.</li>
+    <li><strong>Rain and storms.</strong> Steady rain, showers with sun breaks (rainbows form opposite the sun), a clearing storm, and thunderstorms.</li>
+    <li><strong>Wind and sea.</strong> Strong gusts, calm air for reflections, big surf and low tide off Ocean Beach.</li>
+    <li><strong>Air.</strong> Exceptionally clear air, and smoke or haze.</li>
+    <li><strong>Moon.</strong> A full or nearly full moon rising at dusk or setting at dawn, with its bearing, and thin crescents in the twilight.</li>
+    <li><strong>Light.</strong> Sunrise or sunset colour, light rays, soft overcast and clean low light.</li>
   </ul>
-  <p>The score is evaluated at sunset and 20 minutes after, and the higher one is shown. For today, two models are scored (HRRR and GFS); if they disagree by more than 25 points the card says so. Days 2 and 3 use the global model only.</p>
-  <p>The strip under each score shows cover by layer at each sample distance. Shaded cells are cloud; outlined cells are the ones blocking the light.</p>
+  <p><strong>What to shoot</strong> turns those into ideas: where to stand, when, what to frame, and which lens and film simulation.</p>
+  <p><strong>The colour score</strong> on each viewpoint card needs two things: a canvas of mid or high cloud overhead, and an open path for the low sun to light it from underneath. That light passes over the ground 50 to 400 km out along the sunrise or sunset bearing. Four components, each 0 to 1, are multiplied together:</p>
+  <ul>
+    <li><strong>Canvas.</strong> Cloud overhead. Clear sky scores low, 30 to 70% cover is ideal, a full deck is riskier. Low cloud overhead hides the canvas.</li>
+    <li><strong>Light path.</strong> Cloud at seven sample points along the bearing, 25 to 400 km out. This is the component that separates glorious from grey.</li>
+    <li><strong>Horizon.</strong> Marine layer and fog at the viewpoint and 25 km out, scaled by how much each spot can see over a shallow layer. Rain nearly zeroes it.</li>
+    <li><strong>Clarity.</strong> Visibility, humidity and aerosols.</li>
+  </ul>
+  <p>The score is taken at the sun event and again 20 minutes into the glow (after sunset, before sunrise), and the higher one is shown. Where the high-resolution model (HRRR) reaches, it is scored alongside the global model (GFS); if they disagree by more than 25 points the card says so.</p>
+  <p>The fog top and the tide come from weather models, not instruments. Treat them as estimates.</p>
 </section>
 
 <footer class="foot">
-  <p>Weather data by <a href="https://open-meteo.com/" rel="noopener">Open-Meteo.com</a> (CC BY 4.0). Sun times via SunCalc. No tracking, no cookies. <a href="#how">How the score works</a>.</p>
+  <p>Weather data by <a href="https://open-meteo.com/" rel="noopener">Open-Meteo.com</a> (CC BY 4.0). Sun times via SunCalc. No tracking, no cookies. <a href="#how">How it works</a>.</p>
 </footer>
 
 <script type="module" src="src/app.js"></script>

@@ -47,3 +47,44 @@ test('Pacific date and time formatting', () => {
   assert.equal(localDateString(d, TZ), '2026-11-09');
   assert.equal(formatLocalTime(d, TZ), '5:03 PM');
 });
+
+// Sunrise, sessions and the moon.
+import { sessionSun, moonCrossings, moonInfo, compassPoint } from '../src/sun.js';
+import { SESSIONS } from '../src/config.js';
+
+test('sunrise in mid November is about 6:48 am PST, bearing east-southeast', () => {
+  const e = sunEvents(37.7544, -122.4477, '2026-11-13', 'America/Los_Angeles');
+  const minutes = (e.sunrise_utc.getTime() - Date.parse('2026-11-13T14:48:00Z')) / 60000;
+  assert.ok(Math.abs(minutes) <= 3, `sunrise off by ${minutes} min`);
+  assert.ok(e.sunrise_azimuth_deg > 105 && e.sunrise_azimuth_deg < 120, `bearing ${e.sunrise_azimuth_deg}`);
+  assert.ok(e.blue_start < e.sunrise_utc && e.sunrise_utc < e.golden_end && e.golden_end < e.golden_start && e.golden_start < e.sunset_utc);
+});
+
+test('session windows bracket the event in the right order', () => {
+  const e = sunEvents(37.7544, -122.4477, '2026-11-13', 'America/Los_Angeles');
+  for (const name of ['morning', 'evening']) {
+    const s = sessionSun(e, name, SESSIONS);
+    assert.ok(s.window_start < s.first_light || name === 'evening');
+    assert.ok(s.window_start < s.event_utc && s.event_utc < s.window_end);
+    assert.ok(s.first_light < s.event_utc && s.event_utc < s.last_light);
+  }
+});
+
+test('moonrise on the full moon of 2026-11-24 falls near sunset, in the east-northeast', () => {
+  const e = sunEvents(37.7544, -122.4477, '2026-11-24', 'America/Los_Angeles');
+  const sun = sessionSun(e, 'evening', SESSIONS);
+  const info = moonInfo(37.7544, -122.4477, sun);
+  assert.ok(info.fraction > 0.97, `fraction ${info.fraction}`);
+  const rise = info.crossings.find((c) => c.type === 'rise');
+  assert.ok(rise, 'no moonrise in the window');
+  assert.ok(Math.abs(rise.time - sun.event_utc) < 75 * 60000);
+  assert.ok(rise.azimuth_deg > 40 && rise.azimuth_deg < 90, `bearing ${rise.azimuth_deg}`);
+  assert.equal(moonCrossings(37.7544, -122.4477, sun.event_utc, sun.event_utc).length, 0);
+});
+
+test('compass points', () => {
+  assert.equal(compassPoint(0), 'N');
+  assert.equal(compassPoint(248), 'W');
+  assert.equal(compassPoint(200), 'S');
+  assert.equal(compassPoint(359), 'N');
+});

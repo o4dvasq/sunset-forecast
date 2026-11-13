@@ -150,15 +150,21 @@ function describeCanvas(canvas, atLocation) {
   return 'Patchy mid-level cloud';
 }
 
+const SESSION_WORDS = {
+  evening: { event: 'sunset', side: 'western', line: 'sunset line', watch: 'watch 10 to 20 minutes after sunset' },
+  morning: { event: 'sunrise', side: 'eastern', line: 'sunrise line', watch: 'be in place 20 minutes before sunrise' },
+};
+
 // One rules-based sentence, led by the limiting factor.
-export function reasonText({ canvas, lightPath, horizon, clarity }, atLocation, location, allLocations) {
+export function reasonText({ canvas, lightPath, horizon, clarity }, atLocation, location, allLocations, session = 'evening') {
+  const words = SESSION_WORDS[session];
   const sentences = [];
   if (horizon.raining) {
-    sentences.push('Rain at sunset.');
+    sentences.push(`Rain at ${words.event}.`);
   } else if (horizon.value < 0.5 || canvas.hidden_by_low) {
-    const elevated = allLocations.filter((l) => l.fog_sensitivity < location.fog_sensitivity).map((l) => l.name.split(',')[0]);
+    const elevated = allLocations.filter((l) => l.fog_sensitivity < location.fog_sensitivity).map((l) => l.name.split(',')[0]).slice(0, 2);
     if (location.fog_sensitivity >= 1) {
-      let s = 'Marine layer at the beach.';
+      let s = location.id.includes('beach') ? 'Marine layer at the beach.' : 'Marine layer at this spot.';
       if (elevated.length && horizon.value < 0.5) s += ` ${elevated.join(' or ')} may clear it.`;
       sentences.push(s);
     } else {
@@ -170,11 +176,11 @@ export function reasonText({ canvas, lightPath, horizon, clarity }, atLocation, 
     const [from, to] = lightPath.blocking_range_km ?? [null, null];
     const deck = lightPath.blocking_layer === 'low' ? 'low deck' : lightPath.blocking_layer === 'mid' ? 'mid-level deck' : 'high deck';
     const range = from != null ? (from === to ? `about ${from} km` : `${from} to ${to} km`) : 'well';
-    sentences.push(`${describeCanvas(canvas, atLocation)} overhead, but a ${deck} ${range} out along the sunset line will block the light.`);
+    sentences.push(`${describeCanvas(canvas, atLocation)} overhead, but a ${deck} ${range} out along the ${words.line} will block the light.`);
   } else if (canvas.canvas_cover * 100 >= 85) {
-    sentences.push(`${describeCanvas(canvas, atLocation)} overhead with an open light path; it lights up only if the western edge is close.`);
+    sentences.push(`${describeCanvas(canvas, atLocation)} overhead with an open light path; it lights up only if the ${words.side} edge is close.`);
   } else {
-    sentences.push(`${describeCanvas(canvas, atLocation)} and a clear western horizon. Good setup; watch 10 to 20 minutes after sunset.`);
+    sentences.push(`${describeCanvas(canvas, atLocation)} and a clear ${words.side} horizon. Good setup; ${words.watch}.`);
   }
   if (clarity.smoke_flag) sentences.push('Smoke or heavy haze in the air; color may be muted or deep red.');
   else if (clarity.haze && !horizon.raining && horizon.value >= 0.5) sentences.push('Hazy air will soften the color.');
@@ -184,7 +190,7 @@ export function reasonText({ canvas, lightPath, horizon, clarity }, atLocation, 
 // Score one evaluation instant. `inputs` is { at_location, samples } with cover
 // in percent, visibility in metres, humidity in percent, precipitation in mm/h,
 // aod unitless. Any field may be null.
-export function scoreInstant(inputs, location, cfg, allLocations = [location]) {
+export function scoreInstant(inputs, location, cfg, allLocations = [location], session = 'evening') {
   const canvas = canvasComponent(inputs.at_location, location, cfg);
   const lightPath = lightPathComponent(inputs.samples, cfg);
   const horizon = horizonComponent(inputs.at_location, inputs.samples[0], location, cfg);
@@ -196,16 +202,23 @@ export function scoreInstant(inputs, location, cfg, allLocations = [location]) {
     label: labelFor(score, cfg),
     components: { canvas: canvas.value, light_path: lightPath.value, horizon: horizon.value, clarity: clarity.value },
     detail: { canvas, lightPath, horizon, clarity },
-    reason: reasonText({ canvas, lightPath, horizon, clarity }, inputs.at_location, location, allLocations),
+    reason: reasonText({ canvas, lightPath, horizon, clarity }, inputs.at_location, location, allLocations, session),
   };
 }
 
-// Score at sunset and at sunset + afterglow; keep the better one.
+// Score at the sun event and at the glow on its dark side (after sunset,
+// before sunrise); keep the better one.
+export function scoreSession(inputsAtEvent, inputsAtGlow, location, cfg, allLocations, session = 'evening') {
+  const eventName = SESSION_WORDS[session].event;
+  const glowName = session === 'morning' ? 'preglow' : 'afterglow';
+  const a = scoreInstant(inputsAtEvent, location, cfg, allLocations, session);
+  if (!inputsAtGlow) return { ...a, evaluated_at: eventName };
+  const b = scoreInstant(inputsAtGlow, location, cfg, allLocations, session);
+  return b.score > a.score ? { ...b, evaluated_at: glowName } : { ...a, evaluated_at: eventName };
+}
+
 export function scoreEvening(inputsAtSunset, inputsAtAfterglow, location, cfg, allLocations) {
-  const a = scoreInstant(inputsAtSunset, location, cfg, allLocations);
-  if (!inputsAtAfterglow) return { ...a, evaluated_at: 'sunset' };
-  const b = scoreInstant(inputsAtAfterglow, location, cfg, allLocations);
-  return b.score > a.score ? { ...b, evaluated_at: 'afterglow' } : { ...a, evaluated_at: 'sunset' };
+  return scoreSession(inputsAtSunset, inputsAtAfterglow, location, cfg, allLocations, 'evening');
 }
 
 // Compare two models' scores.

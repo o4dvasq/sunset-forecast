@@ -107,3 +107,32 @@ h1 { font-size: 1.35rem; }
 .how ul { padding-left: 18px; }
 .foot { margin-top: 20px; color: var(--muted); font-size: 0.8rem; }
 a { color: var(--accent); }
+
+/* Session strip, verdict, conditions and shot ideas */
+.sessions { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin: 4px 0 12px; }
+.session {
+  background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 10px;
+  padding: 6px 2px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 1px; font: inherit;
+}
+.session.selected { border-color: var(--accent); background: var(--card-2); }
+.session.past { opacity: 0.5; }
+.session-day { font-size: 0.72rem; color: var(--muted); }
+.session-name { font-size: 0.72rem; letter-spacing: 0.04em; }
+.session-num { font-size: 1.05rem; font-weight: 650; }
+.session.label-skip .session-num { color: var(--skip); }
+.session.label-maybe .session-num { color: var(--maybe); }
+.session.label-go .session-num { color: var(--go); }
+.session.label-don-t-miss .session-num { color: var(--dont-miss); }
+.verdict { display: flex; align-items: center; gap: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-bottom: 12px; }
+.verdict p { margin: 0; font-size: 1.05rem; font-weight: 600; }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-bottom: 12px; }
+.panel h2, .section-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 0 0 8px; }
+.section-title { margin: 18px 2px 8px; }
+.conditions, .ideas { margin: 0; padding-left: 18px; }
+.conditions li, .ideas li { margin-bottom: 8px; }
+.idea p { margin: 0 0 2px; }
+.idea-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.idea-when { color: var(--accent); font-size: 0.85rem; white-space: nowrap; }
+.idea-place { color: var(--muted); font-size: 0.9rem; }
+.idea-kit { color: var(--muted); font-size: 0.85rem; }
+.local { color: var(--muted); font-size: 0.9rem; margin: 0 0 8px; }
