@@ -1,0 +1,145 @@
+{
+  "generated_at": "2026-11-14T02:26:16.879Z",
+  "edition": "evening",
+  "date": "2026-11-13",
+  "rating": 53,
+  "rating_label": "Go",
+  "phenomena": [
+    {
+      "id": "rainbow",
+      "title": "Showers with sun breaks",
+      "strength": 0.6240563538888889,
+      "sites": [
+        "twin-peaks",
+        "grand-view"
+      ],
+      "text": "Passing showers with a low sun. A rainbow is possible; it will be to the east, opposite the sun.",
+      "look": "east"
+    },
+    {
+      "id": "big-surf",
+      "title": "Big surf",
+      "strength": 0.6,
+      "sites": [
+        "ocean-beach",
+        "lands-end"
+      ],
+      "text": "Waves about 10 ft at 10 s off Ocean Beach. Keep back from the wash."
+    },
+    {
+      "id": "marine-layer",
+      "title": "Marine layer",
+      "strength": 0.45,
+      "sites": [
+        "ocean-beach",
+        "lands-end",
+        "hawk-hill",
+        "baker-beach",
+        "mount-tam"
+      ],
+      "text": "Low cloud at Ocean Beach, Lands End, Hawk Hill, Baker Beach and Mount Tamalpais; the model does not resolve its depth.",
+      "top_m": null
+    },
+    {
+      "id": "clean-light",
+      "title": "Clear sky, clean low light",
+      "strength": 0.45,
+      "sites": [],
+      "text": "Clear sky. Warm low side-light and long shadows, then a clean blue hour."
+    },
+    {
+      "id": "rays",
+      "title": "Light rays through broken cloud",
+      "strength": 0.4,
+      "sites": [
+        "twin-peaks",
+        "grand-view"
+      ],
+      "text": "Broken cloud with some haze in the air. Shafts of light are likely while the sun is low."
+    },
+    {
+      "id": "color",
+      "title": "Sunset colour",
+      "strength": 0.07,
+      "sites": [
+        "ocean-beach",
+        "lands-end",
+        "twin-peaks",
+        "hawk-hill",
+        "baker-beach",
+        "grand-view",
+        "mount-tam"
+      ],
+      "text": "Best at Hawk Hill: 7 (Skip). Clear sky. Clean light, little color.",
+      "scores": {
+        "ocean-beach": 2,
+        "lands-end": 1,
+        "twin-peaks": 6,
+        "hawk-hill": 7,
+        "baker-beach": 2,
+        "grand-view": 6,
+        "mount-tam": 6
+      },
+      "best_site": "hawk-hill"
+    }
+  ],
+  "suggestions": [
+    {
+      "id": "rainbow-watch",
+      "site": "twin-peaks",
+      "because": "rainbow",
+      "rank": 0.5304479008055556,
+      "title": "Showers with sun breaks",
+      "place": "Twin Peaks or Grand View Park",
+      "shot": "Rainbow watch. Keep the sun at your back and wait for a shower to pass in front of you; frame the bow over the city or the avenues.",
+      "kit": "18mm f/2.8 for the whole bow, XC 50-230mm where it meets the skyline; no polarizer at full strength, it can erase the bow",
+      "sim": "Velvia",
+      "note": null,
+      "from": "2026-11-14T00:22:13.896Z",
+      "to": "2026-11-14T01:00:28.982Z"
+    },
+    {
+      "id": "big-surf",
+      "site": "lands-end",
+      "because": "big-surf",
+      "rank": 0.44999999999999996,
+      "title": "Big surf",
+      "place": "Fort Point, or the Lands End overlooks above Sutro Baths",
+      "shot": "Sets wrapping the Fort Point seawall under the bridge, or spray exploding on the Lands End rocks. Stay above the wash.",
+      "kit": "XC 50-230mm; 1/1000 s to freeze spray or 1/4 s on a tripod for streaks",
+      "sim": "Classic Chrome",
+      "note": null,
+      "from": "2026-11-14T00:22:13.896Z",
+      "to": "2026-11-14T01:00:28.982Z"
+    },
+    {
+      "id": "fog-minimal",
+      "site": null,
+      "because": "marine-layer",
+      "rank": 0.27,
+      "title": "Marine layer",
+      "place": "Ocean Beach, or Fort Point under the bridge",
+      "shot": "Minimalism: lone figures on the sand, the bridge deck vanishing into grey, the Sutro Baths walls as simple shapes.",
+      "kit": "56mm f/1.7 to isolate; expose a stop over so the fog stays white",
+      "sim": "Acros",
+      "note": null,
+      "from": "2026-11-13T22:00:28.982Z",
+      "to": "2026-11-14T01:28:20.622Z"
+    },
+    {
+      "id": "hard-light-street",
+      "site": null,
+      "because": "clean-light",
+      "rank": 0.225,
+      "title": "Clear sky, clean low light",
+      "place": "the Mission, North Beach, or the 16th Avenue Tiled Steps (they face the low sun)",
+      "shot": "Long shadows and warm side-light: figures crossing bars of light, stair risers glowing. Expose for the highlights.",
+      "kit": "27mm f/1.2 or 56mm f/1.7, minus two thirds of a stop",
+      "sim": "Classic Chrome",
+      "note": null,
+      "from": "2026-11-14T00:22:13.896Z",
+      "to": "2026-11-14T01:00:28.982Z"
+    }
+  ],
+  "text": "Fri, Nov 13, evening\nGO (53): Showers with sun breaks\nGolden light from 4:22pm, sunset 5:00pm (bearing 248°), blue hour until 5:28pm\nAt Twin Peaks: 53°F, wind W 5 mph\n\nWEATHER\n- Showers with sun breaks. Passing showers with a low sun. A rainbow is possible; it will be to the east, opposite the sun.\n- Big surf. Waves about 10 ft at 10 s off Ocean Beach. Keep back from the wash.\n- Marine layer. Low cloud at Ocean Beach, Lands End, Hawk Hill, Baker Beach and Mount Tamalpais; the model does not resolve its depth.\n- Clear sky, clean low light. Clear sky. Warm low side-light and long shadows, then a clean blue hour.\n\nSHOOT\n1. Twin Peaks or Grand View Park, 4:22pm to 5:00pm. Rainbow watch. Keep the sun at your back and wait for a shower to pass in front of you; frame the bow over the city or the avenues. Lens: 18mm f/2.8 for the whole bow, XC 50-230mm where it meets the skyline; no polarizer at full strength, it can erase the bow. Sim: Velvia.\n2. Fort Point, or the Lands End overlooks above Sutro Baths, 4:22pm to 5:00pm. Sets wrapping the Fort Point seawall under the bridge, or spray exploding on the Lands End rocks. Stay above the wash. Lens: XC 50-230mm; 1/1000 s to freeze spray or 1/4 s on a tripod for streaks. Sim: Classic Chrome.\n3. Ocean Beach, or Fort Point under the bridge, 2:00pm to 5:28pm. Minimalism: lone figures on the sand, the bridge deck vanishing into grey, the Sutro Baths walls as simple shapes. Lens: 56mm f/1.7 to isolate; expose a stop over so the fog stays white. Sim: Acros.\n\nTomorrow morning: Maybe (45), big surf. Sunrise 6:48am.\nhttps://o4dvasq.github.io/sunset-forecast/"
+}
