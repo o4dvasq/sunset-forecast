@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-11-21T18:15:28.323Z",
+  "edition": "morning",
+  "date": "2026-11-21",
+  "rating": 30,
+  "rating_label": "Maybe",
+  "phenomena": [
+    {
+      "id": "calm",
+      "title": "Calm air",
+      "strength": 0.5,
+      "sites": [
+        "embarcadero"
+      ],
+      "text": "Wind under 5 mph at Embarcadero. Still water and clean reflections."
+    },
+    {
+      "id": "marine-layer",
+      "title": "Marine layer",
+      "strength": 0.45,
+      "sites": [
+        "ocean-beach",
+        "lands-end",
+        "twin-peaks",
+        "hawk-hill",
+        "baker-beach",
+        "grand-view",
+        "mount-tam"
+      ],
+      "text": "Low cloud at Ocean Beach, Lands End, Twin Peaks, Hawk Hill, Baker Beach, Grand View Park and Mount Tamalpais, top about 600 m.",
+      "top_m": 595.0449554570604
+    },
+    {
+      "id": "color",
+      "title": "Sunrise colour",
+      "strength": 0.13,
+      "sites": [
+        "twin-peaks",
+        "hawk-hill",
+        "grand-view",
+        "mount-tam",
+        "embarcadero"
+      ],
+      "text": "Best at Mount Tamalpais: 13 (Skip). Patchy mid-level cloud overhead, but a low deck 50 to 300 km out along the sunrise line will block the light.",
+      "scores": {
+        "twin-peaks": 4,
+        "hawk-hill": 2,
+        "grand-view": 2,
+        "mount-tam": 13,
+        "embarcadero": 13
+      },
+      "best_site": "mount-tam"
+    }
+  ],
+  "suggestions": [
+    {
+      "id": "glass-bay",
+      "site": "embarcadero",
+      "because": "calm",
+      "rank": 0.3,
+      "title": "Calm air",
+      "place": "Pier 14 or the old pilings south of the Ferry Building",
+      "shot": "Bay Bridge and its lights mirrored on still water, pilings in the foreground.",
+      "kit": "23mm f/2.8 or 18mm f/2.8, tripod, 10 to 30 s",
+      "sim": "Classic Chrome",
+      "note": null,
+      "from": "2026-11-21T14:28:01.930Z",
+      "to": "2026-11-21T14:51:23.186Z"
+    },
+    {
+      "id": "fog-minimal",
+      "site": null,
+      "because": "marine-layer",
+      "rank": 0.27,
+      "title": "Marine layer",
+      "place": "Ocean Beach, or Fort Point under the bridge",
+      "shot": "Minimalism: lone figures on the sand, the bridge deck vanishing into grey, the Sutro Baths walls as simple shapes.",
+      "kit": "56mm f/1.7 to isolate; expose a stop over so the fog stays white",
+      "sim": "Acros",
+      "note": null,
+      "from": "2026-11-21T14:28:01.930Z",
+      "to": "2026-11-21T17:26:23.186Z"
+    }
+  ],
+  "text": "Sat, Nov 21, morning\nMAYBE (30): Calm air\nFirst light 6:28am, sunrise 6:56am (bearing 115°), golden light until 7:35am\nAt Twin Peaks: 39°F, wind NE 4 mph\n\nWEATHER\n- Calm air. Wind under 5 mph at Embarcadero. Still water and clean reflections.\n- Marine layer. Low cloud at Ocean Beach, Lands End, Twin Peaks, Hawk Hill, Baker Beach, Grand View Park and Mount Tamalpais, top about 600 m.\n- Sunrise colour. Best at Mount Tamalpais: 13 (Skip). Patchy mid-level cloud overhead, but a low deck 50 to 300 km out along the sunrise line will block the light.\n\nSHOOT\n1. Pier 14 or the old pilings south of the Ferry Building, 6:28am to 6:51am. Bay Bridge and its lights mirrored on still water, pilings in the foreground. Lens: 23mm f/2.8 or 18mm f/2.8, tripod, 10 to 30 s. Sim: Classic Chrome.\n2. Ocean Beach, or Fort Point under the bridge, 6:28am to 9:26am. Minimalism: lone figures on the sand, the bridge deck vanishing into grey, the Sutro Baths walls as simple shapes. Lens: 56mm f/1.7 to isolate; expose a stop over so the fog stays white. Sim: Acros.\n\nTonight: Maybe (48), fog rolling in. Sunset 4:55pm.\nhttps://o4dvasq.github.io/sunset-forecast/"
+}
