@@ -1,0 +1,98 @@
+{
+  "generated_at": "2026-11-28T03:53:30.271Z",
+  "edition": "evening",
+  "date": "2026-11-27",
+  "rating": 32,
+  "rating_label": "Maybe",
+  "phenomena": [
+    {
+      "id": "low-tide",
+      "title": "Low tide",
+      "strength": 0.45,
+      "sites": [
+        "lands-end",
+        "baker-beach",
+        "ocean-beach"
+      ],
+      "text": "Low water around 5:22pm. Wet sand, exposed rock and tide pools.",
+      "time": "2026-11-28T01:22:36.936Z"
+    },
+    {
+      "id": "soft-light",
+      "title": "Soft overcast light",
+      "strength": 0.35,
+      "sites": [],
+      "text": "High overcast, no shadows. Even light for colour, detail and faces."
+    },
+    {
+      "id": "color",
+      "title": "Sunset colour",
+      "strength": 0.02,
+      "sites": [
+        "ocean-beach",
+        "lands-end",
+        "twin-peaks",
+        "hawk-hill",
+        "baker-beach",
+        "grand-view",
+        "mount-tam"
+      ],
+      "text": "Best at Ocean Beach: 2 (Skip). A solid deck of high cloud overhead, but a mid-level deck 25 to 400 km out along the sunset line will block the light.",
+      "scores": {
+        "ocean-beach": 2,
+        "lands-end": 2,
+        "twin-peaks": 2,
+        "hawk-hill": 2,
+        "baker-beach": 2,
+        "grand-view": 2,
+        "mount-tam": 2
+      },
+      "best_site": "ocean-beach"
+    }
+  ],
+  "suggestions": [
+    {
+      "id": "sutro-pools",
+      "site": "lands-end",
+      "because": "low-tide",
+      "rank": 0.315,
+      "title": "Low tide",
+      "place": "Sutro Baths",
+      "shot": "The ruins and tide pools as mirrors for the sky, the walls as leading lines to the sea.",
+      "kit": "18mm f/2.8, low to the water, tripod",
+      "sim": "Velvia",
+      "note": null,
+      "from": "2026-11-28T00:52:36.936Z",
+      "to": "2026-11-28T01:52:36.936Z"
+    },
+    {
+      "id": "bridge-wet-sand",
+      "site": "baker-beach",
+      "because": "low-tide",
+      "rank": 0.27,
+      "title": "Low tide",
+      "place": "Baker Beach, or Marshall's Beach for the rocks",
+      "shot": "The bridge reflected in wet sand as each wave pulls back; rocks exposed at the north end.",
+      "kit": "18mm f/2.8 or 23mm f/2.8; half a second on a tripod for the receding water",
+      "sim": "Classic Chrome",
+      "note": null,
+      "from": "2026-11-28T00:52:36.936Z",
+      "to": "2026-11-28T01:52:36.936Z"
+    },
+    {
+      "id": "soft-steps",
+      "site": null,
+      "because": "soft-light",
+      "rank": 0.175,
+      "title": "Soft overcast light",
+      "place": "the 16th Avenue Tiled Steps and Hidden Garden Steps, or a street walk in the Mission or Chinatown",
+      "shot": "Shadowless light: mosaic colour at full saturation, or faces and shopfronts without hard contrast.",
+      "kit": "27mm f/1.2 or 23mm f/2.8",
+      "sim": "Reala Ace for colour, Acros for the street",
+      "note": null,
+      "from": "2026-11-27T21:52:36.936Z",
+      "to": "2026-11-28T01:21:18.493Z"
+    }
+  ],
+  "text": "Fri, Nov 27, evening\nMAYBE (32): Low tide\nGolden light from 4:12pm, sunset 4:52pm (bearing 244°), blue hour until 5:21pm\nAt Twin Peaks: 54°F, wind NE 4 mph\n\nWEATHER\n- Low tide. Low water around 5:22pm. Wet sand, exposed rock and tide pools.\n- Soft overcast light. High overcast, no shadows. Even light for colour, detail and faces.\n- Sunset colour. Best at Ocean Beach: 2 (Skip). A solid deck of high cloud overhead, but a mid-level deck 25 to 400 km out along the sunset line will block the light.\n\nSHOOT\n1. Sutro Baths, 4:52pm to 5:52pm. The ruins and tide pools as mirrors for the sky, the walls as leading lines to the sea. Lens: 18mm f/2.8, low to the water, tripod. Sim: Velvia.\n2. Baker Beach, or Marshall's Beach for the rocks, 4:52pm to 5:52pm. The bridge reflected in wet sand as each wave pulls back; rocks exposed at the north end. Lens: 18mm f/2.8 or 23mm f/2.8; half a second on a tripod for the receding water. Sim: Classic Chrome.\n3. The 16th Avenue Tiled Steps and Hidden Garden Steps, or a street walk in the Mission or Chinatown, 1:52pm to 5:21pm. Shadowless light: mosaic colour at full saturation, or faces and shopfronts without hard contrast. Lens: 27mm f/1.2 or 23mm f/2.8. Sim: Reala Ace for colour, Acros for the street.\n\nTomorrow morning: Skip (18), soft overcast light. Sunrise 7:03am.\nhttps://o4dvasq.github.io/sunset-forecast/"
+}
